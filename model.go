@@ -294,6 +294,9 @@ func (m *Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		case key.Matches(msg, m.keys.NewSnippet):
 			m.state = creatingState
 			return m, m.createNewSnippetFile()
+		case key.Matches(msg, m.keys.NewDirectory):
+			m.state = creatingState
+			return m, m.createNewDirectory()
 		case key.Matches(msg, m.keys.MoveSnippetDown):
 			m.moveSnippetDown()
 		case key.Matches(msg, m.keys.MoveSnippetUp):
@@ -629,6 +632,30 @@ func (m *Model) createNewSnippetFile() tea.Cmd {
 
 		m.List().InsertItem(m.List().Index(), newSnippet)
 		return changeStateMsg{navigatingState}
+	}
+}
+
+// createNewDirectory creates a new dir and default snippet there. Goes directly to editing state
+func (m *Model) createNewDirectory() tea.Cmd {
+	return func() tea.Msg {
+		folder := defaultSnippetFolder
+		file := fmt.Sprintf("snippet-%d.%s", rand.Intn(1000000), m.config.DefaultLanguage)
+
+		newSnippet := Snippet{
+			Name:     defaultSnippetName,
+			Date:     time.Now(),
+			File:     file,
+			Language: m.config.DefaultLanguage,
+			Tags:     []string{},
+			Folder:   folder,
+		}
+
+		_, _ = os.Create(filepath.Join(m.config.Home, newSnippet.Path()))
+
+		m.List().InsertItem(m.List().Index(), newSnippet)
+		// This directly allows to set the directory name
+		m.activeInput = folderInput
+		return changeStateMsg{editingState}
 	}
 }
 

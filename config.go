@@ -43,12 +43,12 @@ func newConfig() Config {
 		File:                "snippets.json",
 		DefaultLanguage:     defaultLanguage,
 		Theme:               "dracula",
-		PrimaryColor:        "#AFBEE1",
-		PrimaryColorSubdued: "#64708D",
+		PrimaryColor:        "#a162f7",
+		PrimaryColorSubdued: "rgba(141, 98, 247, 0.40)",
 		BrightGreenColor:    "#BCE1AF",
-		GreenColor:          "#527251",
+		GreenColor:          "#7bb11a",
 		BrightRedColor:      "#E49393",
-		RedColor:            "#A46060",
+		RedColor:            "#eb4d4b;",
 		ForegroundColor:     "15",
 		BackgroundColor:     "235",
 		GrayColor:           "241",
@@ -66,11 +66,17 @@ func defaultConfig() string {
 	if c := os.Getenv("NAP_CONFIG"); c != "" {
 		return c
 	}
-	cfgPath, err := xdg.ConfigFile("nap/config.yaml")
-	if err != nil {
-		return "config.yaml"
+	cfgPathYML, err := xdg.ConfigFile("nap/config.yml")
+	if err == nil {
+		return cfgPathYML
 	}
-	return cfgPath
+
+	// Attempt to find configuration file with .yaml extension
+	cfgPathYAML, err := xdg.ConfigFile("nap/config.yaml")
+	if err == nil {
+		return cfgPathYAML
+	}
+	return "config.yaml"
 }
 
 // readConfig returns a configuration read from the environment.
