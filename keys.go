@@ -39,12 +39,12 @@ var DefaultKeyMap = KeyMap{
 	PasteSnippet:    key.NewBinding(key.WithKeys("p"), key.WithHelp("p", "paste")),
 	RenameSnippet:   key.NewBinding(key.WithKeys("r"), key.WithHelp("r", "rename snippet")),
 	SetFolder:       key.NewBinding(key.WithKeys("R"), key.WithHelp("R", "rename folder")),
-	SetLanguage:     key.NewBinding(key.WithKeys("L"), key.WithHelp("L", "set file type")),
+	SetLanguage:     key.NewBinding(key.WithKeys("t"), key.WithHelp("t", "set file type")),
 	TagSnippet:      key.NewBinding(key.WithKeys("t"), key.WithHelp("t", "tag"), key.WithDisabled()),
 	Confirm:         key.NewBinding(key.WithKeys("y"), key.WithHelp("y", "confirm")),
 	Cancel:          key.NewBinding(key.WithKeys("N", "esc"), key.WithHelp("N", "cancel")),
-	NextPane:        key.NewBinding(key.WithKeys("tab", "right"), key.WithHelp("tab", "navigate")),
-	PreviousPane:    key.NewBinding(key.WithKeys("shift+tab", "left"), key.WithHelp("shift+tab", "navigate")),
+	NextPane:        key.NewBinding(key.WithKeys("tab", "right", "l"), key.WithHelp("l", "navigate right")),
+	PreviousPane:    key.NewBinding(key.WithKeys("shift+tab", "left", "h"), key.WithHelp("h", "navigate left")),
 	ChangeFolder:    key.NewBinding(key.WithKeys("enter"), key.WithHelp("enter", "change folder"), key.WithDisabled()),
 }
 
